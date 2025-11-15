@@ -8,6 +8,11 @@ const outfit = Outfit({ subsets: ['latin'], weight: ["300", "400", "500"] })
 export const metadata = {
   title: "Kazochka Shop — Twój Market Online",
   description: "Kazochka Shop to nowoczesny marketplace, w którym znajdziesz elektronikę, akcesoria i wiele innych produktów w najlepszych cenach.",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  }
 };
 
 export default function RootLayout({ children }) {
