@@ -9,9 +9,9 @@ export const metadata = {
   title: "Kazochka Shop — Twój Market Online",
   description: "Kazochka Shop to nowoczesny marketplace, w którym znajdziesz elektronikę, akcesoria i wiele innych produktów w najlepszych cenach.",
   icons: {
-    icon: "/app/favicon.png",
-    shortcut: "/app/favicon.png",
-    apple: "/app/favicon.png",
+    icon: "/favicon.png?v=1",
+    shortcut: "/favicon.png?v=1",
+    apple: "/favicon.png?v=1",
   }
 };
 
