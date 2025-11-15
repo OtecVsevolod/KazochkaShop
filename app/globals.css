@@ -2,18 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: #05060A;
+  --foreground: #f5f5f5;
+}
+
 * {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Убираем скроллбар – стиль под твой неон */
+::-webkit-scrollbar {
+  display: none;
 }
 
 @layer base {
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
-
-::-webkit-scrollbar {
-  display: none;
 }
