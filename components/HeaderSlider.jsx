@@ -6,26 +6,26 @@ const HeaderSlider = () => {
   const sliderData = [
     {
       id: 1,
-      title: "Experience Pure Sound - Your Perfect Headphones Awaits!",
-      offer: "Limited Time Offer 30% Off",
-      buttonText1: "Buy now",
-      buttonText2: "Find more",
+      title: "Słuchawki, które zmienią Twoje brzmienie na co dzień.",
+      offer: "Promocja na elektronikę — do 30% taniej",
+      buttonText1: "Kup teraz",
+      buttonText2: "Zobacz słuchawki",
       imgSrc: assets.header_headphone_image,
     },
     {
       id: 2,
-      title: "Next-Level Gaming Starts Here - Discover PlayStation 5 Today!",
-      offer: "Hurry up only few lefts!",
-      buttonText1: "Shop Now",
-      buttonText2: "Explore Deals",
+      title: "Kazochka Shop — gry, konsole i akcesoria w jednym miejscu.",
+      offer: "Nowe dostawy • PS5, Xbox, akcesoria gamingowe",
+      buttonText1: "Sprawdź ofertę",
+      buttonText2: "Zobacz konsole",
       imgSrc: assets.header_playstation_image,
     },
     {
       id: 3,
-      title: "Power Meets Elegance - Apple MacBook Pro is Here for you!",
-      offer: "Exclusive Deal 40% Off",
-      buttonText1: "Order Now",
-      buttonText2: "Learn More",
+      title: "Laptopy do pracy, nauki i grania — wybierz swój zestaw.",
+      offer: "Wybrane modele w najlepszych cenach",
+      buttonText1: "Zobacz laptopy",
+      buttonText2: "Przeglądaj produkty",
       imgSrc: assets.header_macbook_image,
     },
   ];
@@ -57,7 +57,9 @@ const HeaderSlider = () => {
             className="flex flex-col-reverse md:flex-row items-center justify-between bg-[#E6E9F2] py-8 md:px-14 px-5 mt-6 rounded-xl min-w-full"
           >
             <div className="md:pl-8 mt-10 md:mt-0">
-              <p className="md:text-base text-orange-600 pb-1">{slide.offer}</p>
+              <p className="md:text-base text-orange-600 pb-1">
+                {slide.offer}
+              </p>
               <h1 className="max-w-lg md:text-[40px] md:leading-[48px] text-2xl font-semibold">
                 {slide.title}
               </h1>
@@ -67,7 +69,11 @@ const HeaderSlider = () => {
                 </button>
                 <button className="group flex items-center gap-2 px-6 py-2.5 font-medium">
                   {slide.buttonText2}
-                  <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon} alt="arrow_icon" />
+                  <Image
+                    className="group-hover:translate-x-1 transition"
+                    src={assets.arrow_icon}
+                    alt="arrow_icon"
+                  />
                 </button>
               </div>
             </div>
