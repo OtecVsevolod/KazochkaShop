@@ -1,16 +1,10 @@
-import { addressDummyData } from "@/assets/assets";
 import { useAppContext } from "@/context/AppContext";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const OrderSummary = () => {
   const { router, getCartCount, getCartAmount } = useAppContext();
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [userAddresses, setUserAddresses] = useState([]);
-
-  const fetchUserAddresses = async () => {
-    setUserAddresses(addressDummyData);
-  };
 
   const handleAddressSelect = (address) => {
     setSelectedAddress(address);
@@ -18,14 +12,9 @@ const OrderSummary = () => {
   };
 
   const createOrder = async () => {
-    // tutaj w przyszłości dodamy logikę tworzenia zamówienia
-    // np. wysłanie danych zamówienia i przekierowanie na /order-placed
+    // тут потом сделаем реальную отправку заказа
     router.push("/order-placed");
   };
-
-  useEffect(() => {
-    fetchUserAddresses();
-  }, []);
 
   const subtotal = getCartAmount();
   const tax = Math.floor(subtotal * 0.02);
@@ -75,19 +64,10 @@ const OrderSummary = () => {
 
             {isDropdownOpen && (
               <ul className="absolute w-full bg-dark3 border border-white/15 shadow-xl mt-1 z-20 rounded-xl py-1.5 max-h-60 overflow-y-auto">
-                {userAddresses.map((address, index) => (
-                  <li
-                    key={index}
-                    className="px-4 py-2 text-xs text-zinc-100 hover:bg-white/5 cursor-pointer"
-                    onClick={() => handleAddressSelect(address)}
-                  >
-                    {address.fullName}, {address.area}, {address.city},{" "}
-                    {address.state}
-                  </li>
-                ))}
+                {/* Пока никаких сохранённых адресов нет */}
                 <li
                   onClick={() => router.push("/add-address")}
-                  className="px-4 py-2 text-xs text-neonOrange font-medium hover:bg-white/5 cursor-pointer text-center border-t border-white/10"
+                  className="px-4 py-2 text-xs text-neonOrange font-medium hover:bg-white/5 cursor-pointer text-center"
                 >
                   + Dodaj nowy adres
                 </li>
