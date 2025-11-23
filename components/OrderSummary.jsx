@@ -1,10 +1,25 @@
 import { useAppContext } from "@/context/AppContext";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const OrderSummary = () => {
   const { router, getCartCount, getCartAmount } = useAppContext();
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [savedAddress, setSavedAddress] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const data = localStorage.getItem("kazochka_address");
+    if (data) {
+      try {
+        const parsed = JSON.parse(data);
+        setSavedAddress(parsed);
+        setSelectedAddress(parsed);
+      } catch (e) {
+        console.error("Nie udało się odczytać adresu:", e);
+      }
+    }
+  }, []);
 
   const handleAddressSelect = (address) => {
     setSelectedAddress(address);
@@ -12,7 +27,13 @@ const OrderSummary = () => {
   };
 
   const createOrder = async () => {
-    // тут потом сделаем реальную отправку заказа
+    // если очень по-честному — тут стоит проверять, что адрес выбран
+    if (!selectedAddress) {
+      alert("Wybierz lub dodaj adres dostawy.");
+      return;
+    }
+
+    // TODO: позже сюда добавим отправку заказа (email / backend)
     router.push("/order-placed");
   };
 
@@ -64,10 +85,18 @@ const OrderSummary = () => {
 
             {isDropdownOpen && (
               <ul className="absolute w-full bg-dark3 border border-white/15 shadow-xl mt-1 z-20 rounded-xl py-1.5 max-h-60 overflow-y-auto">
-                {/* Пока никаких сохранённых адресов нет */}
+                {savedAddress && (
+                  <li
+                    className="px-4 py-2 text-xs text-zinc-100 hover:bg-white/5 cursor-pointer"
+                    onClick={() => handleAddressSelect(savedAddress)}
+                  >
+                    {savedAddress.fullName}, {savedAddress.area},{" "}
+                    {savedAddress.city}, {savedAddress.state}
+                  </li>
+                )}
                 <li
                   onClick={() => router.push("/add-address")}
-                  className="px-4 py-2 text-xs text-neonOrange font-medium hover:bg-white/5 cursor-pointer text-center"
+                  className="px-4 py-2 text-xs text-neonOrange font-medium hover:bg-white/5 cursor-pointer text-center border-t border-white/10"
                 >
                   + Dodaj nowy adres
                 </li>

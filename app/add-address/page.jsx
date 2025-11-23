@@ -4,8 +4,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import { useState } from "react";
+import { useAppContext } from "@/context/AppContext";
 
 const AddAddress = () => {
+  const { router } = useAppContext();
+
   const [address, setAddress] = useState({
     fullName: "",
     phoneNumber: "",
@@ -15,10 +18,29 @@ const AddAddress = () => {
     state: "",
   });
 
-  const onSubmitHandler = async (e) => {
+  const onSubmitHandler = (e) => {
     e.preventDefault();
-    // TODO: tutaj później dodamy zapis adresu / przejście do podsumowania zamówienia
-    console.log("Adres dostawy:", address);
+
+    // простая валидация
+    if (
+      !address.fullName ||
+      !address.phoneNumber ||
+      !address.pincode ||
+      !address.area ||
+      !address.city ||
+      !address.state
+    ) {
+      alert("Uzupełnij wszystkie pola adresu.");
+      return;
+    }
+
+    // сохраняем адрес локально в браузере
+    if (typeof window !== "undefined") {
+      localStorage.setItem("kazochka_address", JSON.stringify(address));
+    }
+
+    // возвращаемся в корзину
+    router.push("/cart");
   };
 
   return (
