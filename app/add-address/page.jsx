@@ -21,7 +21,6 @@ const AddAddress = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    // простая валидация
     if (
       !address.fullName ||
       !address.phoneNumber ||
@@ -34,12 +33,10 @@ const AddAddress = () => {
       return;
     }
 
-    // сохраняем адрес локально в браузере
     if (typeof window !== "undefined") {
       localStorage.setItem("kazochka_address", JSON.stringify(address));
     }
 
-    // возвращаемся в корзину
     router.push("/cart");
   };
 

@@ -3,9 +3,13 @@ import React, { useState, useEffect } from "react";
 
 const OrderSummary = () => {
   const { router, getCartCount, getCartAmount } = useAppContext();
+
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [savedAddress, setSavedAddress] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // "cod" — при получении, "transfer" — банковский перевод
+  const [paymentMethod, setPaymentMethod] = useState("cod");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -27,13 +31,33 @@ const OrderSummary = () => {
   };
 
   const createOrder = async () => {
-    // если очень по-честному — тут стоит проверять, что адрес выбран
     if (!selectedAddress) {
       alert("Wybierz lub dodaj adres dostawy.");
       return;
     }
+    if (!paymentMethod) {
+      alert("Wybierz metodę płatności.");
+      return;
+    }
 
-    // TODO: позже сюда добавим отправку заказа (email / backend)
+    const subtotal = getCartAmount();
+    const tax = Math.floor(subtotal * 0.02);
+    const total = subtotal + tax;
+
+    const orderData = {
+      address: selectedAddress,
+      paymentMethod,
+      itemsCount: getCartCount(),
+      subtotal,
+      tax,
+      total,
+      createdAt: new Date().toISOString(),
+    };
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("kazochka_last_order", JSON.stringify(orderData));
+    }
+
     router.push("/order-placed");
   };
 
@@ -105,6 +129,48 @@ const OrderSummary = () => {
           </div>
         </div>
 
+        {/* METODA PŁATNOŚCI */}
+        <div>
+          <label className="text-xs font-semibold uppercase text-zinc-400 block mb-2 tracking-wide">
+            Metoda płatności
+          </label>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-xs text-zinc-200 cursor-pointer">
+              <input
+                type="radio"
+                name="payment"
+                value="cod"
+                checked={paymentMethod === "cod"}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                className="accent-neonOrange"
+              />
+              <span>
+                Płatność przy odbiorze{" "}
+                <span className="text-zinc-400">
+                  (gotówka / karta u kuriera)
+                </span>
+              </span>
+            </label>
+
+            <label className="flex items-center gap-2 text-xs text-zinc-200 cursor-pointer">
+              <input
+                type="radio"
+                name="payment"
+                value="transfer"
+                checked={paymentMethod === "transfer"}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                className="accent-neonOrange"
+              />
+              <span>
+                Przelew bankowy{" "}
+                <span className="text-zinc-400">
+                  (dane do przelewu w potwierdzeniu)
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
         {/* KOD RABATOWY */}
         <div>
           <label className="text-xs font-semibold uppercase text-zinc-400 block mb-2 tracking-wide">
@@ -130,7 +196,11 @@ const OrderSummary = () => {
             <p className="uppercase text-zinc-400 tracking-wide">
               Produkty {getCartCount()}
             </p>
-            <p className="text-zinc-100">{subtotal} PLN</p>
+          </div>
+
+          <div className="flex justify-between text-zinc-300">
+            <p>Suma produktów</p>
+            <p className="font-medium text-zinc-100">{subtotal} PLN</p>
           </div>
 
           <div className="flex justify-between text-zinc-300">
