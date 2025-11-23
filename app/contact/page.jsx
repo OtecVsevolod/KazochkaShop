@@ -1,7 +1,17 @@
+import Link from "next/link";
+
 export default function ContactPage() {
   return (
     <main className="min-h-[60vh] bg-dark text-foreground">
       <div className="mx-auto max-w-4xl px-4 py-10 md:px-6 lg:px-8">
+        {/* Ссылка назад на главную */}
+        <Link
+          href="/"
+          className="mb-6 inline-flex items-center text-sm text-neonOrange hover:text-neonBlue transition"
+        >
+          ← Wróć do strony głównej
+        </Link>
+
         <h1 className="text-3xl font-semibold text-foreground mb-4">
           Kontakt
         </h1>
